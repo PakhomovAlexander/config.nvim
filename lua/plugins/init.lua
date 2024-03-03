@@ -1,3 +1,3 @@
 return {
-	'utils'
+	'utils', 'telescope', 'treesitter'
 }

@@ -15,3 +15,6 @@ vim.opt.scrolloff = 8
 
 vim.opt.updatetime = 50
 
+
+-- do not promt on buffer switch
+vim.opt.hidden = true
