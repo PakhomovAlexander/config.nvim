@@ -15,5 +15,17 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
- 'ThePrimeagen/vim-be-good'
+ 'ThePrimeagen/vim-be-good',
+ 'navarasu/onedark.nvim',
+ 'nvim-lualine/lualine.nvim'
 })
+
+-- Theme 
+require('onedark').load()
+
+-- Line
+require('lualine').setup()
+
+
+
+
