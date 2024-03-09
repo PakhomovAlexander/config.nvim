@@ -1,3 +1,3 @@
 return {
-	'utils', 'telescope', 'treesitter'
+	'utils', 'telescope', 'treesitter', 'navigation'
 }
