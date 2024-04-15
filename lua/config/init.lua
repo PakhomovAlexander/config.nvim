@@ -1,3 +1,2 @@
-require('config.options')
-require('config.keymap')
-require('config.treesitter')
+require'config.options'
+require'config.keymap'
