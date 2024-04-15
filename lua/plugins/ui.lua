@@ -4,7 +4,10 @@ return {
     priority = 1000,
     config = function() 
       require('onedark').setup {
-        style = 'warmer'
+        style = 'warmer',
+        lualine = {
+          transparent = true
+        },
       }
       vim.cmd.colorscheme 'onedark'
     end,
@@ -18,8 +21,7 @@ return {
         theme = 'onedark',
         component_separators = '|',
         section_separators = '',
-      
-    }
-  },
-}
+      }
+    },
+  }
 }

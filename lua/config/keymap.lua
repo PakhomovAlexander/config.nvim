@@ -1,4 +1,4 @@
-vim.keymap.set('n', '<esc><esc>', ':nohlsearch<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<esc>', ':nohlsearch<CR>', { noremap = true, silent = true })
 
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
