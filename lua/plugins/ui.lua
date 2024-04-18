@@ -8,6 +8,15 @@ return {
         lualine = {
           transparent = true
         },
+        colors = {
+          orange_2 = "#ffbf80"
+        },
+        highlights = {
+          ["@include"] = {fg = '$orange_2'},
+          ["@keyword"] = {fg = '$orange_2'},
+          ["@keyword.function"] = {fg = '$orange_2'},
+          ["@define"] = {fg = '$orange_2'},
+        }
       }
       vim.cmd.colorscheme 'onedark'
     end,
