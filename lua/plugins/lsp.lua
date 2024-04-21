@@ -1,25 +1,24 @@
 return {
-
-    "neovim/nvim-lspconfig",
+    'neovim/nvim-lspconfig',
 
     {
-        "williamboman/mason.nvim",
+        'williamboman/mason.nvim',
         config = function() 
-            require("mason").setup()
+            require('mason').setup()
         end, 
     },
 
     {
-        "williamboman/mason-lspconfig.nvim",
+        'williamboman/mason-lspconfig.nvim',
         dependincies = {
-            "mason.nvim"
+            'mason.nvim'
         },
         config = function()
-            local conf = require("mason-lspconfig")
+            local conf = require('mason-lspconfig')
             conf.setup()
             conf.setup_handlers({
                 function(server_name)
-                    require("lspconfig")[server_name].setup({})
+                    require('lspconfig')[server_name].setup({})
                 end
             })
 
