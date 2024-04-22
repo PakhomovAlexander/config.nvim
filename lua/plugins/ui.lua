@@ -14,9 +14,10 @@ return  { {
           local field = { link = "Purple" }
           local func = { link = "Blue" }
           local number = { link = "Blue"}
+          local annotation = { link = "Yellow"}
 
-          hl["@annotation"] = { link = "TSAnnotation" }
-          hl["@attribute"] = { link = "TSAttribute" }
+          hl["@annotation"] = annotation
+          hl["@attribute"] = annotation
           hl["@boolean.yaml"] = { link = "yamlTSBoolean" }
           hl["@boolean"] = { link = "Fg"}
           hl["@character"] = { link = "TSCharacter" }
@@ -51,7 +52,7 @@ return  { {
           hl["@function.builtin"] = fg
           hl["@function.call"] = fg 
           hl["@function.macro"] = fg
-          hl["@function.method"] = fg
+          hl["@function.method"] = fg 
           hl["@function.method.call"] = fg 
           hl["@include"] = { link = "TSInclude" }
           hl["@include.go"] = { link = "goTSInclude" }
@@ -202,7 +203,7 @@ return  { {
           hl["@lsp.type.lifetime"] = { link = "@storageclass.lifetime" }
           hl["@lsp.type.macro"] = { link = "@constant.macro" }
           hl["@lsp.type.magicFunction"] = { link = "@function.builtin" }
-          hl["@lsp.type.method"] = fg 
+          hl["@lsp.type.method"] = fg
           hl["@lsp.type.modifier"] = { link = "@type.qualifier" }
           hl["@lsp.type.namespace"] = { link = "@namespace" }
           hl["@lsp.type.namespace.go"] = { link = "@namespace.go" }
