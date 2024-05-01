@@ -17,15 +17,20 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
  'ThePrimeagen/vim-be-good',
  'navarasu/onedark.nvim',
- 'nvim-lualine/lualine.nvim'
+ 'nvim-lualine/lualine.nvim',
+ {
+	 'folke/which-key.nvim', opts = {}
+ }
 })
 
 -- Theme 
 require('onedark').load()
 
+
 -- Line
 require('lualine').setup()
 
 
-
+vim.opt.nu = true
+vim.opt.relativenumber = true
 
