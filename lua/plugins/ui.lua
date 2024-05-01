@@ -6,20 +6,28 @@ return  { {
     config = function()
       require('everforest').setup({
         background = 'hard',
+        transparent = 2,
+        ui_contrast = "low", 
+        italics = true,
+        diagnostic_text_highlight = true,
+        diagnostic_line_highlight = true,
+        diagnostic_virtual_text = "grey",
+
         on_highlights = function(hl, palette)
           local keyword = { fg = palette.orange }
+          local bool = { fg = palette.orange}
           local comment = { link = "Comment" }
           local fg = { link = "Fg" }
           local string = { link = "Green"}
           local field = { link = "Purple" }
-          local func = { link = "Blue" }
+          local func = { link = "Red" }
           local number = { link = "Blue"}
           local annotation = { link = "Yellow"}
 
           hl["@annotation"] = annotation
           hl["@attribute"] = annotation
           hl["@boolean.yaml"] = { link = "yamlTSBoolean" }
-          hl["@boolean"] = { link = "Fg"}
+          hl["@boolean"] = bool
           hl["@character"] = { link = "TSCharacter" }
           hl["@character.special"] = { link = "TSCharacterSpecial" }
           hl["@comment"] = comment
@@ -64,7 +72,7 @@ return  { {
           hl["@keyword.directive"] = keyword
           hl["@keyword.directive.define"] = keyword
           hl["@keyword.exception"] = keyword
-          hl["@keyword.function"] = {fg = palette.blue}
+          hl["@keyword.function"] = func
           hl["@keyword.import"] = keyword
           hl["@keyword.import.go"] = keyword
           hl["@keyword.import.javascript"] = keyword
@@ -180,8 +188,11 @@ return  { {
 
 
           -- My own
-          hl["@constant.builtin.java"] = keyword 
-          hl["@lsp.mod.documentation.java"] = fg 
+          hl["@constant.builtin.java"] = keyword
+          hl["@lsp.mod.documentation.java"] = fg
+          hl["@lsp.mod.documentation.lua"] = {fg = palette.yellow, italic = true }
+          hl["@lsp.type.property.lua"] = fg
+          hl["@lsp.type.macro.lua"] = fg
 
           -- LSP Semantic token highlights
           hl["@lsp.type.boolean"] = { link = "@boolean" }
@@ -224,7 +235,7 @@ return  { {
           hl["@lsp.typemod.enum.defaultLibrary"] = { link = "@type.builtin" }
           hl["@lsp.typemod.enumMember.defaultLibrary"] = { link = "@constant.builtin" }
           hl["@lsp.typemod.function.defaultLibrary"] = { link = "@function.builtin" }
-          hl["@lsp.typemod.function.readonly"] = { link = "@method" } 
+          hl["@lsp.typemod.function.readonly"] = { link = "@method" }
           hl["@lsp.typemod.keyword.async"] = { link = "@keyword" }
           hl["@lsp.typemod.keyword.injected"] = { link = "@keyword" }
           hl["@lsp.typemod.macro.defaultLibrary"] = { link = "@function.builtin" }
