@@ -20,12 +20,3 @@ require'config'
 
 vim.cmd.colorscheme 'everforest'
 
-
--- todo
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    -- vim.keymap.set('n', 'crr', vim.lsp.buf.rename, { buffer = args.buf })
-    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, { buffer = args.buf })
-    -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, { buffer = args.buf })
-  end,
-})
