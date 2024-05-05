@@ -14,6 +14,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
 require("lazy").setup({
  'ThePrimeagen/vim-be-good',
  'navarasu/onedark.nvim',
@@ -34,3 +35,4 @@ require('lualine').setup()
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
+vim.keymap.set('n', '<esc>', ':nohlsearch<CR>', { noremap = true, silent = true })
