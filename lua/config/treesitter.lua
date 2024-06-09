@@ -1,5 +1,5 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"go", "lua", "rust", "vim", "vimdoc"},
+  ensure_installed = {"go", "lua", "rust", "vim", "vimdoc", "java", "kotlin", "groovy"},
 
   auto_install = true,
 
@@ -12,13 +12,13 @@ require'nvim-treesitter.configs'.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<leader>ss", 
+      init_selection = "<leader>ss",
       -- I have no idea why this is not working...
       node_incremental = "<leader>si",
       scope_incremental = "<leader>sc",
       node_decremental = "<leader>sd",
     },
-  }, 
+  },
 
   textobjects = {
     select = {

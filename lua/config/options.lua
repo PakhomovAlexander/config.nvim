@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+--
 vim.o.clipboard = 'unnamedplus'
 vim.o.termguicolors = true
 
@@ -12,13 +14,13 @@ vim.opt.expandtab = true
 
 vim.opt.smartindent = true
 
-vim.opt.scrolloff = 10 
+vim.opt.scrolloff = 10
 
 vim.opt.updatetime = 50
 
 vim.opt.hidden = true
 
-vim.g.have_nerd_font = true 
+vim.g.have_nerd_font = true
 
 vim.opt.showmode = false
 
@@ -29,7 +31,6 @@ vim.opt.timeoutlen = 300
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
 
 vim.opt.inccommand = 'split'
 

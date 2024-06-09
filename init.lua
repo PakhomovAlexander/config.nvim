@@ -19,4 +19,3 @@ require'lazy'.setup'plugins'
 require'config'
 
 vim.cmd.colorscheme 'everforest'
-

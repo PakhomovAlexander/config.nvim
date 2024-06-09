@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[args.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
     vim.keymap.set({'n', 'v'}, '<leader>r',  vim.lsp.buf.rename, { buffer = args.buf })
-    vim.keymap.set({ 'n', 'v' }, '<space>a', vim.lsp.buf.code_action, { buffer = args.buf })
+    vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, { buffer = args.buf })
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     vim.keymap.set('n', '<leader>jr', vim.lsp.buf.references, { buffer = args.buf })
 
