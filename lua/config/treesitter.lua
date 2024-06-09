@@ -13,7 +13,6 @@ require'nvim-treesitter.configs'.setup {
     enable = true,
     keymaps = {
       init_selection = "<leader>ss",
-      -- I have no idea why this is not working...
       node_incremental = "<leader>si",
       scope_incremental = "<leader>sc",
       node_decremental = "<leader>sd",

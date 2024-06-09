@@ -24,15 +24,12 @@ vim.g.have_nerd_font = true
 
 vim.opt.showmode = false
 
-vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.timeoutlen = 300
 
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
-vim.opt.inccommand = 'split'
 
 vim.opt.cursorline = true
 
