@@ -2,8 +2,8 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 vim.g.have_nerd_font = true
-vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.number = true
 vim.opt.showmode = false
 vim.opt.breakindent = true
 vim.opt.undofile = true
@@ -380,25 +380,76 @@ require('lazy').setup {
       }
     end,
   },
+
   {
-    'rebelot/kanagawa.nvim',
-    priority = 1000,
-    init = function()
-      vim.cmd.colorscheme 'kanagawa-dragon'
-      -- vim.cmd.hi 'Comment gui=none'
-      -- vim.cmd [[highlight! link CmpPmenu KanagawaPmenu]]
-      -- vim.cmd [[highlight! link CmpPmenuSel KanagawaPmenuSel]]
-      -- vim.cmd [[highlight! link CmpPmenuThumb KanagawaPmenuThumb]]
-      -- vim.cmd [[highlight! link CmpDocumentation KanagawaDocumentation]]
-      -- vim.cmd [[highlight! link CmpDocumentationBorder KanagawaDocumentationBorder]]
+    'sainnhe/gruvbox-material',
+    priority = 1000, -- Ensure Gruvbox Material loads first (if necessary)
+    config = function()
+      -- Gruvbox Material settings
+      vim.o.background = 'dark' -- Set background to dark. Can be "dark" or "light".
+      vim.g.gruvbox_material_background = 'hard' -- Options: "soft", "medium", "hard"
+      vim.g.gruvbox_material_palette = 'material' -- Options: "material", "mix", "original"
+      vim.g.gruvbox_material_enable_italic = true -- Enable italic comments, etc.
+      vim.g.gruvbox_material_better_performance = 1 -- Optimize performance for large files
+
+      vim.g.gruvbox_material_transparent_background = 2
+
+      -- Load Gruvbox Material as the colorscheme
+      vim.cmd 'colorscheme gruvbox-material'
     end,
   },
-  { -- Collection of various small independent plugins/modules
-    'echasnovski/mini.nvim',
+
+  -- {
+  --   'rebelot/kanagawa.nvim',
+  --   priority = 1000,
+  --   init = function()
+  --     vim.cmd.colorscheme 'kanagawa-dragon'
+  --     -- vim.cmd.hi 'Comment gui=none'
+  --     -- vim.cmd [[highlight! link CmpPmenu KanagawaPmenu]]
+  --     -- vim.cmd [[highlight! link CmpPmenuSel KanagawaPmenuSel]]
+  --     -- vim.cmd [[highlight! link CmpPmenuThumb KanagawaPmenuThumb]]
+  --     -- vim.cmd [[highlight! link CmpDocumentation KanagawaDocumentation]]
+  --     -- vim.cmd [[highlight! link CmpDocumentationBorder KanagawaDocumentationBorder]]
+  --   end,
+  -- },
+  -- { -- Collection of various small independent plugins/modules
+  --   'echasnovski/mini.nvim',
+  --   config = function()
+  --     local statusline = require 'mini.statusline'
+  --     statusline.setup {
+  --       use_icons = vim.g.have_nerd_font,
+  --     }
+  --   end,
+  -- },
+  {
+    'nvim-lualine/lualine.nvim', -- The path to the lualine.nvim plugin
+    event = 'BufReadPre', -- Optionally lazy-load on event
+    dependencies = { 'nvim-tree/nvim-web-devicons', opt = true }, -- Icons support
     config = function()
-      local statusline = require 'mini.statusline'
-      statusline.setup {
-        use_icons = vim.g.have_nerd_font,
+      require('lualine').setup {
+        options = {
+          theme = 'gruvbox-material',
+          --section_separators = '', -- Disable separators
+          --component_separators = '', -- Disable separators
+        },
+        sections = {
+          lualine_a = { 'mode' }, -- Show mode (e.g., NORMAL, INSERT)
+          lualine_b = { 'branch' }, -- Show Git branch
+          lualine_c = { 'filename' }, -- Show file name
+          lualine_x = { 'encoding', 'fileformat', 'filetype' }, -- Encoding/filetype info
+          lualine_y = { 'progress' }, -- Progress (e.g., 41%)
+          lualine_z = { 'location' }, -- Cursor location (line/column)
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = { 'location' },
+          lualine_y = {},
+          lualine_z = {},
+        },
+        tabline = {},
+        extensions = {},
       }
     end,
   },
@@ -578,7 +629,7 @@ vim.cmd [[
   highlight StatusLine guibg=NONE ctermbg=NONE
   highlight TabLine guibg=NONE ctermbg=NONE
   highlight TabLineFill guibg=NONE ctermbg=NONE
-  highlight TabLineSel guibg=NONE ctermbg=NONE 
+  highlight TabLineSel guibg=NONE ctermbg=NONE
   highlight StatusLineNC guibg=NONE ctermbg=NONE
 ]]
 
