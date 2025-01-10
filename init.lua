@@ -87,7 +87,6 @@ require('lazy').setup {
       },
     },
   },
-
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
@@ -145,6 +144,7 @@ require('lazy').setup {
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]earch [H]elp' })
       vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]earch [F]iles' })
+      vim.keymap.set('n', '<leader>fj', builtin.lsp_document_symbols, { desc = '[F]earch Symbols' })
       vim.keymap.set('n', '<leader>fs', builtin.builtin, { desc = '[F]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[F]earch current [W]ord' })
       vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]earch by [G]rep' })
@@ -220,7 +220,15 @@ require('lazy').setup {
         clangd = {},
         gopls = {},
         pyright = {},
-        rust_analyzer = {},
+        rust_analyzer = {
+          settings = {
+            ['rust-analyzer'] = {
+              checkOnSave = {
+                command = 'clippy',
+              },
+            },
+          },
+        },
 
         lua_ls = {
           settings = {
@@ -324,9 +332,12 @@ require('lazy').setup {
           completion = cmp.config.window.bordered {
             winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
           },
-          -- documentation = cmp.config.window.bordered {
-          --   winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
-          -- },
+          documentation = cmp.config.window.bordered {
+            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+          },
+          menu = cmp.config.window.bordered {
+            winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None',
+          },
         },
         formatting = {
           format = lspkind.cmp_format {
@@ -346,11 +357,11 @@ require('lazy').setup {
           ['<CR>'] = cmp.mapping.confirm { select = true },
           ['<C-Space>'] = cmp.mapping.complete {},
 
-          ['<C-l>'] = cmp.mapping(function()
-            if luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            end
-          end, { 'i', 's' }),
+          -- ['<C-l>'] = cmp.mapping(function()
+          --   if luasnip.expand_or_locally_jumpable() then
+          --     luasnip.expand_or_jump()
+          --   end
+          -- end, { 'i', 's' }),
           ['<C-h>'] = cmp.mapping(function()
             if luasnip.locally_jumpable(-1) then
               luasnip.jump(-1)
@@ -374,27 +385,85 @@ require('lazy').setup {
     priority = 1000,
     init = function()
       vim.cmd.colorscheme 'kanagawa-dragon'
-      vim.cmd.hi 'Comment gui=none'
+      -- vim.cmd.hi 'Comment gui=none'
+      -- vim.cmd [[highlight! link CmpPmenu KanagawaPmenu]]
+      -- vim.cmd [[highlight! link CmpPmenuSel KanagawaPmenuSel]]
+      -- vim.cmd [[highlight! link CmpPmenuThumb KanagawaPmenuThumb]]
+      -- vim.cmd [[highlight! link CmpDocumentation KanagawaDocumentation]]
+      -- vim.cmd [[highlight! link CmpDocumentationBorder KanagawaDocumentationBorder]]
     end,
   },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()
       local statusline = require 'mini.statusline'
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
+      statusline.setup {
+        use_icons = vim.g.have_nerd_font,
+      }
     end,
   },
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
-
+  {
+    'folke/trouble.nvim',
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = 'Trouble',
+    keys = {
+      {
+        '<leader>xx',
+        '<cmd>Trouble diagnostics toggle<cr>',
+        desc = 'Diagnostics (Trouble)',
+      },
+      {
+        '<leader>xX',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = 'Buffer Diagnostics (Trouble)',
+      },
+      {
+        '<leader>cl',
+        '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+        desc = 'LSP Definitions / references / ... (Trouble)',
+      },
+      {
+        '<leader>xL',
+        '<cmd>Trouble loclist toggle<cr>',
+        desc = 'Location List (Trouble)',
+      },
+      {
+        '<leader>xQ',
+        '<cmd>Trouble qflist toggle<cr>',
+        desc = 'Quickfix List (Trouble)',
+      },
+    },
+  },
+  {
+    'ggandor/leap.nvim',
+    config = function()
+      local leap = require 'leap'
+      leap.add_default_mappings()
+      leap.opts.case_sensitive = true
+    end,
+  },
   {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'hocon',
+        'rust',
+        'just',
+      },
       auto_install = true,
       highlight = {
         enable = true,
@@ -502,50 +571,61 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
-require('kanagawa').setup {
-  compile = true, -- enable compiling the colorscheme
-  undercurl = true, -- enable undercurls
-  commentStyle = { italic = true },
-  functionStyle = {},
-  keywordStyle = { italic = true },
-  statementStyle = { bold = true },
-  typeStyle = {},
-  transparent = false, -- do not set background color
-  dimInactive = false, -- dim inactive window `:h hl-NormalNC`
-  terminalColors = true, -- define vim.g.terminal_color_{0,17}
-  colors = { -- add/modify theme and palette colors
-    palette = {},
-    theme = {
-      wave = {
-        ui = {
-          float = {
-            bg = 'none',
-          },
-        },
-      },
-      dragon = {
-        syn = {
-          parameter = 'yellow',
-        },
-      },
-      all = {
-        ui = {
-          bg_gutter = 'none',
-        },
-      },
-    },
-  },
-  overrides = function(colors) -- add/modify highlights
-    local theme = colors.theme
-    return {
-      Visual = { bg = theme.ui.bg_p2 },
-    }
-  end,
-  theme = 'dragon',
-  background = {
-    dark = 'dragon',
-    light = 'lotus',
-  },
-}
+
+vim.cmd [[
+  highlight Normal guibg=NONE ctermbg=NONE
+  highlight NonText guibg=NONE ctermbg=NONE
+  highlight StatusLine guibg=NONE ctermbg=NONE
+  highlight TabLine guibg=NONE ctermbg=NONE
+  highlight TabLineFill guibg=NONE ctermbg=NONE
+  highlight TabLineSel guibg=NONE ctermbg=NONE 
+  highlight StatusLineNC guibg=NONE ctermbg=NONE
+]]
+
+-- require('kanagawa').setup {
+--   compile = true, -- enable compiling the colorscheme
+--   undercurl = true, -- enable undercurls
+--   commentStyle = { italic = true },
+--   functionStyle = {},
+--   keywordStyle = { italic = true },
+--   statementStyle = { bold = true },
+--   typeStyle = {},
+--   transparent = true, -- do not set background color
+--   dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+--   terminalColors = true, -- define vim.g.terminal_color_{0,17}
+--   colors = { -- add/modify theme and palette colors
+--     palette = {},
+--     theme = {
+--       wave = {
+--         ui = {
+--           float = {
+--             bg = 'none',
+--           },
+--         },
+--       },
+--       dragon = {
+--         syn = {
+--           parameter = 'yellow',
+--         },
+--       },
+--       all = {
+--         ui = {
+--           bg_gutter = 'none',
+--         },
+--       },
+--     },
+--   },
+--   overrides = function(colors) -- add/modify highlights
+--     local theme = colors.theme
+--     return {
+--       Visual = { bg = theme.ui.bg_p2 },
+--     }
+--   end,
+--   theme = 'dragon',
+--   -- background = {
+--   --   dark = 'dragon',
+--   --   light = 'lotus',
+--   -- },
+-- }
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
